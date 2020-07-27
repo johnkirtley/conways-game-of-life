@@ -85,6 +85,7 @@ __pypackages__/
 # Environment
 .env
 .venv
+.flaskenv
 env/
 venv/
 ENV/

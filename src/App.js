@@ -2,8 +2,10 @@ import React, { useState, useCallback, useRef } from 'react';
 import produce from 'immer';
 
 // Components
+import { Header } from './components/Header';
 import { Controls } from './components/Controls';
-import { Generations } from './components/Generations';
+import { Directions } from './components/Directions';
+// import { Generations } from './components/Generations';
 import { Grid } from './components/Grid';
 
 // Utilities
@@ -78,27 +80,45 @@ const App = () => {
 
 	return (
 		<>
-			<Controls
-				simRef={simRef}
-				simulating={simulating}
-				setSimulating={setSimulating}
-				executeSim={executeSim}
-				setGenerations={setGenerations}
-				setGrid={setGrid}
-				grid={grid}
-				rowAmt={rowAmt}
-				colAmt={colAmt}
-				setCellColor={setCellColor}
-				setSpeed={setSpeed}
-			/>
-			<Generations generations={generations} />
-			<Grid
-				grid={grid}
-				setGrid={setGrid}
-				colAmt={colAmt}
-				simulating={simulating}
-				cellColor={cellColor}
-			/>
+			<Header />
+			<div
+				style={{
+					display: 'flex',
+					paddingBottom: '2rem',
+					margin: '3rem',
+				}}>
+				<div
+					style={{
+						display: 'flex',
+						flexFlow: 'column',
+						justifyContent: 'center',
+						alignItems: 'center',
+						width: '100%',
+					}}>
+					<Controls
+						simRef={simRef}
+						simulating={simulating}
+						setSimulating={setSimulating}
+						executeSim={executeSim}
+						setGenerations={setGenerations}
+						setGrid={setGrid}
+						grid={grid}
+						rowAmt={rowAmt}
+						colAmt={colAmt}
+						setCellColor={setCellColor}
+						setSpeed={setSpeed}
+					/>
+					{/* <Generations generations={generations} /> */}
+					<Grid
+						grid={grid}
+						setGrid={setGrid}
+						colAmt={colAmt}
+						simulating={simulating}
+						cellColor={cellColor}
+					/>
+				</div>
+				<Directions generations={generations} />
+			</div>
 		</>
 	);
 };

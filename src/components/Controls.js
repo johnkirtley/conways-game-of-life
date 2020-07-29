@@ -3,10 +3,17 @@ import { generateEmptyGrid } from '../utils/grid-generator';
 
 import { CellColor } from './CellColor';
 import { Speed } from './Speed';
+import { PresetSelector } from './PresetSelector';
 
 export const Controls = (props) => {
 	return (
 		<>
+			<p>
+				Start By Selecting Some Adjacent Cells, Randomize, or a Preset{' '}
+				<span role='img' aria-label='emoji'>
+					🙂
+				</span>
+			</p>
 			{/* Start Button */}
 			<button
 				onClick={() => {
@@ -49,6 +56,11 @@ export const Controls = (props) => {
 
 			<CellColor setCellColor={props.setCellColor} />
 			<Speed setSpeed={props.setSpeed} />
+			<PresetSelector
+				grid={props.grid}
+				setGrid={props.setGrid}
+				setGenerations={props.setGenerations}
+			/>
 		</>
 	);
 };

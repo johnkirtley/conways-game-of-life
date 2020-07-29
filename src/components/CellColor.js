@@ -14,9 +14,9 @@ export const CellColor = (props) => {
 				defaultValue='black'
 				onChange={updateCellColor}>
 				<option value='black'>Black</option>
-				<option value='yellow'>Yellow</option>
+				<option value='green'>Green</option>
 				<option value='pink'>Pink</option>
-				<option value='blue'>Blue</option>
+				<option value='orange'>Orange</option>
 			</select>
 		</div>
 	);

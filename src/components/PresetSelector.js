@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import produce from 'immer';
 import * as p from '../utils/presets';
 import { generateEmptyGrid } from '../utils/grid-generator';
 
 export const PresetSelector = (props) => {
-	const [emptyGrid] = useState(() => generateEmptyGrid());
-
+	// Generates An Empty Grid and Applies Selected Pattern To Grid State
 	const presetGenerator = (type) => {
 		props.grid.forEach((row, i) => {
 			row.forEach((col, j) => {
 				if (!props.simulating) {
-					const newGrid = produce(emptyGrid, (gridCopy) => {
+					const newGrid = produce(generateEmptyGrid(), (gridCopy) => {
 						type.forEach(([x, y]) => {
 							gridCopy[x][y] = 1;
 						});
@@ -22,6 +21,7 @@ export const PresetSelector = (props) => {
 		});
 	};
 
+	// Returns presetGenerator Function With Selected Pattern Coordinates Passed In
 	const setPreset = (pattern) => {
 		switch (pattern) {
 			case 'glider':

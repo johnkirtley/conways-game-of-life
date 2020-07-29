@@ -85,6 +85,7 @@ const App = () => {
 				executeSim={executeSim}
 				setGenerations={setGenerations}
 				setGrid={setGrid}
+				grid={grid}
 				rowAmt={rowAmt}
 				colAmt={colAmt}
 				setCellColor={setCellColor}

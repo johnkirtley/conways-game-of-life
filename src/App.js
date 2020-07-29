@@ -1,29 +1,20 @@
 import React, { useState, useCallback, useRef } from 'react';
 import produce from 'immer';
+
+// Components
+import { Controls } from './components/Controls';
+import { Generations } from './components/Generations';
+import { Grid } from './components/Grid';
+
+// Utilities
+import { generateEmptyGrid } from './utils/grid-generator';
+import { ops } from './utils/operations';
+
+// Styling
 import './App.css';
 
 const rowAmt = 25;
 const colAmt = 25;
-
-const ops = [
-	[0, 1],
-	[0, -1],
-	[1, -1],
-	[-1, 1],
-	[1, 1],
-	[-1, -1],
-	[1, 0],
-	[-1, 0],
-];
-
-const generateEmptyGrid = () => {
-	const rows = [];
-	for (let i = 0; i < rowAmt; i++) {
-		rows.push(Array.from(Array(colAmt), () => 0));
-	}
-
-	return rows;
-};
 
 const App = () => {
 	const [grid, setGrid] = useState(() => {
@@ -31,50 +22,40 @@ const App = () => {
 	});
 
 	const [simulating, setSimulating] = useState(false);
-
-	const simRef = useRef(simulating);
-	simRef.current = simulating;
-
 	const [generations, setGenerations] = useState(0);
-
-	const genRef = useRef(generations);
-	genRef.current = generations;
-
 	const [cellColor, setCellColor] = useState('black');
-
-	const updateCellColor = (e) => {
-		setCellColor(e.target.value);
-	};
-
 	const [speed, setSpeed] = useState('1');
 
-	const changeSpeed = (e) => {
-		setSpeed(Number(e.target.value));
-	};
-
+	// Main Grid Logic
 	const executeSim = useCallback(() => {
 		if (!simRef.current) {
 			return;
 		} else {
+			// Returning New Grid Based On Cell Movements
 			setGrid((v) => {
 				return produce(v, (gridCopy) => {
 					for (let i = 0; i < rowAmt; i++) {
 						for (let j = 0; j < rowAmt; j++) {
 							let neighbors = 0;
 
+							// Utilizing Array to Check For All Possible Moves
 							ops.forEach(([x, y]) => {
 								const newI = i + x;
 								const newJ = j + y;
 
+								// Grid Boundary Checking
 								if (newI >= 0 && newI < rowAmt && newJ >= 0 && newJ < colAmt) {
 									neighbors += v[newI][newJ];
 								}
 							});
 
+							// Updating Cell Status Based On Amount of Neighbors
 							if (neighbors < 2 || neighbors > 3) {
 								gridCopy[i][j] = 0;
 							} else if (v[i][j] === 0 && neighbors === 3) {
 								gridCopy[i][j] = 1;
+
+								// Updating Generation Count
 								setGenerations(genRef.current + 1);
 							}
 						}
@@ -82,98 +63,41 @@ const App = () => {
 				});
 			});
 
+			// Runs executeSim Function At Selected Speed
 			setTimeout(executeSim, `${speed}` * 1000);
 		}
 	}, [speed]);
 
+	// Since executeSim Function Is Using useCallBack, It Will Continue To Reset Simulating/Generations Values Every Render
+	// Utilizing useRef So That We Can Maintain Values Even After Grid Re-Renders
+	const simRef = useRef(simulating);
+	simRef.current = simulating;
+
+	const genRef = useRef(generations);
+	genRef.current = generations;
+
 	return (
 		<>
-			<button
-				onClick={() => {
-					setSimulating(!simulating);
-
-					if (!simulating) {
-						simRef.current = true;
-						executeSim();
-					}
-				}}>
-				{simulating ? 'Stop' : 'Start'}
-			</button>
-			<button
-				onClick={() => {
-					setGrid(generateEmptyGrid());
-					setGenerations(0);
-				}}>
-				Reset
-			</button>
-			<button
-				onClick={() => {
-					const rows = [];
-					for (let i = 0; i < rowAmt; i++) {
-						rows.push(
-							Array.from(Array(colAmt), () => (Math.random() > 0.7 ? 1 : 0))
-						);
-					}
-
-					setGrid(rows);
-				}}>
-				Randomize
-			</button>
-			<div>
-				<label className='label'>Choose a Cell Color:</label>
-				<select
-					name='colors'
-					id='colors'
-					defaultValue='black'
-					onChange={updateCellColor}>
-					<option value='black'>Black</option>
-					<option value='yellow'>Yellow</option>
-					<option value='pink'>Pink</option>
-					<option value='blue'>Blue</option>
-				</select>
-			</div>
-			<div>
-				<label>Select Speed</label>
-				<select
-					name='speed'
-					id='speed'
-					defaultValue='1'
-					selected='Medium'
-					onChange={changeSpeed}>
-					<option value='3'>Slow</option>
-					<option value='1'>Medium</option>
-					<option value='0.5'>Fast</option>
-					<option value='0.1'>Ludicrous</option>
-				</select>
-			</div>
-			<div>{`Generations: ${generations / 2}`}</div>
-			<div
-				style={{
-					display: 'grid',
-					gridTemplateColumns: `repeat(${colAmt}, 20px)`,
-				}}>
-				{grid.map((rows, i) =>
-					rows.map((col, j) => (
-						<div
-							key={`${i}-${j}`}
-							onClick={() => {
-								if (!simulating) {
-									const newGrid = produce(grid, (gridCopy) => {
-										gridCopy[i][j] = grid[i][j] ? 0 : 1;
-									});
-									setGrid(newGrid);
-								}
-							}}
-							style={{
-								width: '20px',
-								height: '20px',
-								border: '1px solid black',
-								backgroundColor: grid[i][j] ? `${cellColor}` : undefined,
-							}}
-						/>
-					))
-				)}
-			</div>
+			<Controls
+				simRef={simRef}
+				simulating={simulating}
+				setSimulating={setSimulating}
+				executeSim={executeSim}
+				setGenerations={setGenerations}
+				setGrid={setGrid}
+				rowAmt={rowAmt}
+				colAmt={colAmt}
+				setCellColor={setCellColor}
+				setSpeed={setSpeed}
+			/>
+			<Generations generations={generations} />
+			<Grid
+				grid={grid}
+				setGrid={setGrid}
+				colAmt={colAmt}
+				simulating={simulating}
+				cellColor={cellColor}
+			/>
 		</>
 	);
 };

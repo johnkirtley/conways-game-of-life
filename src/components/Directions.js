@@ -3,6 +3,7 @@ import React from 'react';
 export const Directions = (props) => {
 	return (
 		<div
+			className='directions'
 			style={{
 				display: 'flex',
 				flexFlow: 'column',
@@ -45,6 +46,7 @@ export const Directions = (props) => {
 					</p>
 				</div>
 				<div
+					className='generations'
 					style={{
 						display: 'flex',
 						justifyContent: 'center',

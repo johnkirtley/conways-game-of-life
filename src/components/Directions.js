@@ -54,7 +54,7 @@ export const Directions = (props) => {
 						height: '100%',
 						fontSize: '3rem',
 						paddingTop: '2rem',
-					}}>{`Generations: ${Math.round(props.generations / 2)}`}</div>
+					}}>{`Generations: ${Math.round(props.generations)}`}</div>
 			</div>
 		</div>
 	);

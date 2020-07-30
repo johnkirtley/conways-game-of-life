@@ -1,23 +1,33 @@
 import React from 'react';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 export const CellColor = (props) => {
-	const updateCellColor = (e) => {
-		props.setCellColor(e.target.value);
+	const updateCellColor = (color) => {
+		props.setCellColor(color);
 	};
 
 	return (
-		<div>
-			<label className='label'>Choose a Cell Color:</label>
-			<select
+		<>
+			<DropdownButton
 				name='colors'
 				id='colors'
-				defaultValue='black'
-				onChange={updateCellColor}>
-				<option value='black'>Black</option>
-				<option value='green'>Green</option>
-				<option value='pink'>Pink</option>
-				<option value='orange'>Orange</option>
-			</select>
-		</div>
+				variant='info'
+				title='Choose a Cell Color'
+				defaultValue='black'>
+				<Dropdown.Item onSelect={() => updateCellColor('black')}>
+					Black
+				</Dropdown.Item>
+				<Dropdown.Item onSelect={() => updateCellColor('green')}>
+					Green
+				</Dropdown.Item>
+				<Dropdown.Item onSelect={() => updateCellColor('pink')}>
+					Pink
+				</Dropdown.Item>
+				<Dropdown.Item onSelect={() => updateCellColor('orange')}>
+					Orange
+				</Dropdown.Item>
+			</DropdownButton>
+		</>
 	);
 };

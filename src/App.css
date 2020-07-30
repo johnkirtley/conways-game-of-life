@@ -1,3 +1,8 @@
+* {
+	background-color: ghostwhite;
+	font-family: 'Recursive', sans-serif;
+}
+
 .App {
 	text-align: center;
 }

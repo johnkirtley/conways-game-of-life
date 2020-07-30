@@ -15,8 +15,7 @@
 
 .container {
 	display: flex;
-	padding-bottom: 2rem;
-	margin: 3rem;
+	padding: 2rem;
 	max-width: 100%;
 }
 

@@ -14,6 +14,7 @@ import { ops } from './utils/operations';
 
 // Styling
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const rowAmt = 25;
 const colAmt = 25;
@@ -106,7 +107,9 @@ const App = () => {
 						rowAmt={rowAmt}
 						colAmt={colAmt}
 						setCellColor={setCellColor}
+						cellColor={cellColor}
 						setSpeed={setSpeed}
+						speed={speed}
 					/>
 					{/* <Generations generations={generations} /> */}
 					<Grid

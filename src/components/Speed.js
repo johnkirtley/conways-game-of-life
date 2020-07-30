@@ -1,23 +1,22 @@
 import React from 'react';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 export const Speed = (props) => {
-	const changeSpeed = (e) => {
-		props.setSpeed(Number(e.target.value));
+	const changeSpeed = (num) => {
+		props.setSpeed(num);
 	};
 	return (
 		<div>
-			<label>Select Speed</label>
-			<select
-				name='speed'
-				id='speed'
-				defaultValue='1'
-				selected='Medium'
-				onChange={changeSpeed}>
-				<option value='3'>Slow</option>
-				<option value='1'>Medium</option>
-				<option value='0.5'>Fast</option>
-				<option value='0.1'>Ludicrous</option>
-			</select>
+			{/* <label>Select Speed</label> */}
+			<DropdownButton name='speed' id='speed' variant='info' title='Speed'>
+				<Dropdown.Item onSelect={() => changeSpeed(3)}>Slow</Dropdown.Item>
+				<Dropdown.Item onSelect={() => changeSpeed(1)}>Medium</Dropdown.Item>
+				<Dropdown.Item onSelect={() => changeSpeed(0.5)}>Fast</Dropdown.Item>
+				<Dropdown.Item onSelect={() => changeSpeed(0.1)}>
+					Ludicrous
+				</Dropdown.Item>
+			</DropdownButton>
 		</div>
 	);
 };

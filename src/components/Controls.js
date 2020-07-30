@@ -5,7 +5,24 @@ import { CellColor } from './CellColor';
 import { Speed } from './Speed';
 import { PresetSelector } from './PresetSelector';
 
+import Button from 'react-bootstrap/Button';
+
 export const Controls = (props) => {
+	const convertNumToSpeed = (num) => {
+		console.log(num);
+		switch (num) {
+			case 1:
+				return 'medium';
+			case 3:
+				return 'slow';
+			case 0.5:
+				return 'fast';
+			case 0.1:
+				return 'ludicrous';
+			default:
+				break;
+		}
+	};
 	return (
 		<>
 			{/* <p>
@@ -14,9 +31,16 @@ export const Controls = (props) => {
 					🙂
 				</span>
 			</p> */}
-			<div style={{ display: 'flex' }}>
+			<div
+				style={{
+					display: 'flex',
+					width: '90%',
+					justifyContent: 'space-evenly',
+					padding: '0 6rem',
+				}}>
 				{/* Start Button */}
-				<button
+				<Button
+					variant={props.simulating ? 'danger' : 'success'}
 					onClick={() => {
 						props.setSimulating(!props.simulating);
 
@@ -26,19 +50,21 @@ export const Controls = (props) => {
 						}
 					}}>
 					{props.simulating ? 'Stop' : 'Start'}
-				</button>
+				</Button>
 
 				{/* Reset Button */}
-				<button
+				<Button
+					variant='secondary'
 					onClick={() => {
 						props.setGrid(generateEmptyGrid());
 						props.setGenerations(0);
 					}}>
 					Reset
-				</button>
+				</Button>
 
 				{/* Randomize Button */}
-				<button
+				<Button
+					variant='warning'
 					onClick={() => {
 						const rows = [];
 						for (let i = 0; i < props.rowAmt; i++) {
@@ -53,17 +79,24 @@ export const Controls = (props) => {
 						props.setGrid(rows);
 					}}>
 					Randomize
-				</button>
+				</Button>
 			</div>
-			<div style={{ display: 'flex' }}>
+			<div
+				style={{
+					display: 'flex',
+					width: '90%',
+					justifyContent: 'space-evenly',
+					padding: '2rem 1rem',
+				}}>
 				<CellColor setCellColor={props.setCellColor} />
 				<Speed setSpeed={props.setSpeed} />
+
+				<PresetSelector
+					grid={props.grid}
+					setGrid={props.setGrid}
+					setGenerations={props.setGenerations}
+				/>
 			</div>
-			<PresetSelector
-				grid={props.grid}
-				setGrid={props.setGrid}
-				setGenerations={props.setGenerations}
-			/>
 		</>
 	);
 };

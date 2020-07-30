@@ -7,7 +7,7 @@ import { Controls } from './components/Controls';
 import { Directions } from './components/Directions';
 import { Grid } from './components/Grid';
 
-// Utilities
+// Helper Functions
 import { generateEmptyGrid } from './utils/grid-generator';
 import { ops } from './utils/operations';
 
@@ -15,6 +15,7 @@ import { ops } from './utils/operations';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+// Grid Size
 const rowAmt = 25;
 const colAmt = 25;
 
@@ -65,7 +66,7 @@ const App = () => {
 				});
 			});
 
-			// Runs executeSim Function At Selected Speed
+			// Renders Grid Updates At Selected Speed
 			setTimeout(executeSim, `${speed}` * 1000);
 		}
 	}, [speed]);
@@ -82,14 +83,7 @@ const App = () => {
 		<>
 			<Header />
 			<div className='container'>
-				<div
-					style={{
-						display: 'flex',
-						flexFlow: 'column',
-						justifyContent: 'center',
-						alignItems: 'center',
-						width: '100%',
-					}}>
+				<div className='left-side'>
 					<Controls
 						simRef={simRef}
 						simulating={simulating}

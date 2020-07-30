@@ -1,24 +1,35 @@
 import React from 'react';
-import { generateEmptyGrid } from '../utils/grid-generator';
-import { disable } from '../utils/disable-buttons';
 
+// Components
 import { CellColor } from './CellColor';
 import { Speed } from './Speed';
 import { PresetSelector } from './PresetSelector';
 
+// Helper Functions
+import { generateEmptyGrid } from '../utils/grid-generator';
+import { disable } from '../utils/disable-buttons';
+
+// Styling
 import Button from 'react-bootstrap/Button';
 
 export const Controls = (props) => {
+	const generateRandomCells = () => {
+		const rows = [];
+		for (let i = 0; i < props.rowAmt; i++) {
+			rows.push(
+				Array.from(Array(props.colAmt), () =>
+					// Randomly Generates Alive/Dead Cells For Every Column
+					Math.random() > 0.7 ? 1 : 0
+				)
+			);
+		}
+		props.setGenerations(0);
+		props.setGrid(rows);
+	};
+
 	return (
 		<>
-			<div
-				style={{
-					display: 'flex',
-					width: '90%',
-					justifyContent: 'space-evenly',
-					padding: '0 6rem',
-				}}
-				className='controls'>
+			<div className='controls'>
 				{/* Start Button */}
 				<Button
 					variant={props.simulating ? 'danger' : 'success'}
@@ -47,28 +58,18 @@ export const Controls = (props) => {
 				<Button
 					variant='warning'
 					disabled={disable(props.simRef.current)}
-					onClick={() => {
-						const rows = [];
-						for (let i = 0; i < props.rowAmt; i++) {
-							rows.push(
-								Array.from(Array(props.colAmt), () =>
-									// Randomly Generates Alive/Dead Cells For Every Column
-									Math.random() > 0.7 ? 1 : 0
-								)
-							);
-						}
-						props.setGenerations(0);
-						props.setGrid(rows);
-					}}>
+					onClick={() => generateRandomCells()}>
 					Randomize
 				</Button>
 			</div>
+
 			<div className='settings'>
 				<CellColor
 					setCellColor={props.setCellColor}
 					cellColor={props.cellColor}
 					simRef={props.simRef}
 				/>
+
 				<Speed
 					setSpeed={props.setSpeed}
 					speed={props.speed}

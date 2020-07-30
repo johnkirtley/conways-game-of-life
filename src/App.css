@@ -13,10 +13,36 @@
 	pointer-events: none;
 }
 
+.header {
+	text-align: center;
+	margin-top: 1rem;
+}
+
 .container {
 	display: flex;
 	padding: 2rem;
 	max-width: 100%;
+}
+
+.cell {
+	width: 20px;
+	height: 20px;
+	border: 1px solid black;
+}
+
+.left-side {
+	display: flex;
+	flex-flow: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+.controls {
+	display: flex;
+	width: 90%;
+	justify-content: space-evenly;
+	padding: 0 6rem;
 }
 
 .settings {
@@ -34,6 +60,15 @@
 	display: flex;
 	flex-flow: column;
 	width: 100%;
+}
+
+.generations {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	height: 100%;
+	font-size: 3rem;
+	padding-top: 2rem;
 }
 
 @media (prefers-reduced-motion: no-preference) {

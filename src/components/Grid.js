@@ -11,9 +11,10 @@ export const Grid = (props) => {
 			{props.grid.map((rows, i) =>
 				rows.map((col, j) => (
 					<div
+						className='cell'
 						key={`${i}-${j}`}
 						onClick={() => {
-							// If Simulation Isn't Running, Return New Grid With Selected Cell's Value Changed
+							// If Simulation Isn't Already Running, Return New Grid With Selected Cell's Value Changed
 							if (!props.simulating) {
 								const newGrid = produce(props.grid, (gridCopy) => {
 									gridCopy[i][j] = props.grid[i][j] ? 0 : 1;
@@ -22,9 +23,6 @@ export const Grid = (props) => {
 							}
 						}}
 						style={{
-							width: '20px',
-							height: '20px',
-							border: '1px solid black',
 							backgroundColor: props.grid[i][j]
 								? `${props.cellColor}`
 								: undefined,

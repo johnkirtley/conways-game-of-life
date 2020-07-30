@@ -2,13 +2,7 @@ import React from 'react';
 
 export const Directions = (props) => {
 	return (
-		<div
-			className='directions'
-			style={{
-				display: 'flex',
-				flexFlow: 'column',
-				width: '100%',
-			}}>
+		<div className='directions'>
 			<div>
 				<h3>Directions:</h3>
 				<p>Select your desired cells (or randomize) and click start.</p>
@@ -45,16 +39,9 @@ export const Directions = (props) => {
 						adjacent.
 					</p>
 				</div>
-				<div
-					className='generations'
-					style={{
-						display: 'flex',
-						justifyContent: 'center',
-						alignItems: 'flex-start',
-						height: '100%',
-						fontSize: '3rem',
-						paddingTop: '2rem',
-					}}>{`Generations: ${Math.round(props.generations)}`}</div>
+				<div className='generations'>
+					{`Generations: ${Math.round(props.generations)}`}
+				</div>
 			</div>
 		</div>
 	);

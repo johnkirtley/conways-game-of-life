@@ -1,19 +1,28 @@
 import React, { useState } from 'react';
 import produce from 'immer';
+
+// Importing All Preset Patterns
 import * as p from '../utils/presets';
+
+// Helper Functions
 import { generateEmptyGrid } from '../utils/grid-generator';
 import { disable } from '../utils/disable-buttons';
+import { titleGenerator } from '../utils/title-generator';
+
+// Styling
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
 export const PresetSelector = (props) => {
 	const [selectedPreset, setSelectedPreset] = useState('none');
+
 	// Generates An Empty Grid and Applies Selected Pattern To Grid State
 	const presetGenerator = (type) => {
 		props.grid.forEach((row, i) => {
 			row.forEach((col, j) => {
 				if (!props.simulating) {
 					const newGrid = produce(generateEmptyGrid(), (gridCopy) => {
+						// Sets Grid Coordinates To Pattern Coordinates
 						type.forEach(([x, y]) => {
 							gridCopy[x][y] = 1;
 						});
@@ -50,13 +59,9 @@ export const PresetSelector = (props) => {
 
 	return (
 		<>
-			{/* <label>Select a Preset</label> */}
 			<DropdownButton
-				name='presets'
-				id='presets'
 				variant='info'
-				defaultValue='default'
-				title={`Preset: ${selectedPreset}`}
+				title={titleGenerator(selectedPreset, 'Preset', 'none')}
 				disabled={disable(props.simRef.current)}>
 				<Dropdown.Item disabled>Select a Preset</Dropdown.Item>
 				<Dropdown.Item onSelect={() => setPreset('none')}>None</Dropdown.Item>

@@ -1,8 +1,12 @@
 import React from 'react';
+
+// Helper Functions
+import { disable } from '../utils/disable-buttons';
+import { titleGenerator } from '../utils/title-generator';
+
+// Styling
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
-
-import { disable } from '../utils/disable-buttons';
 
 export const CellColor = (props) => {
 	const updateCellColor = (color) => {
@@ -12,15 +16,8 @@ export const CellColor = (props) => {
 	return (
 		<>
 			<DropdownButton
-				name='colors'
-				id='colors'
 				variant='info'
-				title={
-					props.cellColor
-						? `Cell Color: ${props.cellColor}`
-						: 'Cell Color: black'
-				}
-				defaultValue='black'
+				title={titleGenerator(props.cellColor, 'Cell Color', 'black')}
 				disabled={disable(props.simRef.current)}>
 				<Dropdown.Item onSelect={() => updateCellColor('black')}>
 					Black

@@ -1,5 +1,10 @@
 import React from 'react';
+
+// Helper Functions
 import { disable } from '../utils/disable-buttons';
+import { titleGenerator } from '../utils/title-generator';
+
+// Styling
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
@@ -8,6 +13,7 @@ export const Speed = (props) => {
 		props.setSpeed(num);
 	};
 
+	// Function To Return Proper Name For Dropdown Title
 	const convertNumToSpeed = (num) => {
 		switch (num) {
 			case 1:
@@ -25,16 +31,13 @@ export const Speed = (props) => {
 
 	return (
 		<div>
-			{/* <label>Select Speed</label> */}
 			<DropdownButton
-				name='speed'
-				id='speed'
 				variant='info'
-				title={
-					convertNumToSpeed(props.speed)
-						? `Speed: ${convertNumToSpeed(props.speed)}`
-						: 'Speed: medium'
-				}
+				title={titleGenerator(
+					convertNumToSpeed(props.speed),
+					'Speed',
+					'medium'
+				)}
 				disabled={disable(props.simRef.current)}>
 				<Dropdown.Item onSelect={() => changeSpeed(3)}>Slow</Dropdown.Item>
 				<Dropdown.Item onSelect={() => changeSpeed(1)}>Medium</Dropdown.Item>

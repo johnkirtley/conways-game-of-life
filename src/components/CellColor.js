@@ -2,6 +2,8 @@ import React from 'react';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 
+import { disable } from '../utils/disable-buttons';
+
 export const CellColor = (props) => {
 	const updateCellColor = (color) => {
 		props.setCellColor(color);
@@ -13,8 +15,13 @@ export const CellColor = (props) => {
 				name='colors'
 				id='colors'
 				variant='info'
-				title='Choose a Cell Color'
-				defaultValue='black'>
+				title={
+					props.cellColor
+						? `Cell Color: ${props.cellColor}`
+						: 'Cell Color: black'
+				}
+				defaultValue='black'
+				disabled={disable(props.simRef.current)}>
 				<Dropdown.Item onSelect={() => updateCellColor('black')}>
 					Black
 				</Dropdown.Item>

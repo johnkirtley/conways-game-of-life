@@ -5,7 +5,6 @@ import produce from 'immer';
 import { Header } from './components/Header';
 import { Controls } from './components/Controls';
 import { Directions } from './components/Directions';
-// import { Generations } from './components/Generations';
 import { Grid } from './components/Grid';
 
 // Utilities
@@ -82,12 +81,7 @@ const App = () => {
 	return (
 		<>
 			<Header />
-			<div
-				style={{
-					display: 'flex',
-					paddingBottom: '2rem',
-					margin: '3rem',
-				}}>
+			<div className='container'>
 				<div
 					style={{
 						display: 'flex',
@@ -111,7 +105,6 @@ const App = () => {
 						setSpeed={setSpeed}
 						speed={speed}
 					/>
-					{/* <Generations generations={generations} /> */}
 					<Grid
 						grid={grid}
 						setGrid={setGrid}
